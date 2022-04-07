@@ -15,6 +15,9 @@ a website for dungeon and dragons interractive game
 
 a game where a random celebrity is choosen and you must decided which tweet is theirs WhoTweeted it
 
+    *people login
+    *leadboard
+
 ## If you plan to collaborate with one or two classmates, what are their names?
 
 Vasilios Kladas
