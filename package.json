@@ -4,7 +4,8 @@
   "description": "This is the final project for CIS1051-Python",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon index.js",
+    "deploy": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,9 @@
   },
   "homepage": "https://github.com/ljtron/FinalProjectCIS1051#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongodb": "^4.5.0",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
   }
 }
