@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #card {display: flex; align-items: center; width: 50vw; justify-content: space-between; padding-left: 10vw;}
+        #cardText {float: right;}
+        #cardBtn {border-radius: 60%; border:10% solid black; width: 2vw; height: 3vh; color: darkgray;}
+    </style>
+</head>
+<body>
+    <p id="p2"> his</p>
+    <div id="container">
+        <div id="card">
+        </div>
+    </div>
+    
+    <script>
+        const userAction = async () => {
+            console.log(window.location.origin)
+            var url = window.location.origin + "/celebData"
+            const response = await fetch(url);
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+
+            console.log(myJson)
+
+            var containerElement = document.getElementById("container")
+            for(var i=0; i<myJson.length; i++){
+                var cardElementClone = document.getElementById("card").cloneNode(true)
+                cardElementClone.className = "card" + i
+                cardElementClone.onclick = function(){
+                    console.log(this.getAttribute("class"))
+                    var id = this.getAttribute("class").substring(this.getAttribute("class").length-1)
+                    
+                    var cardId = "card" + id
+                    //document.getElementsByClassName(cardId).style = "background-color: blue;"
+                    document.getElementsById("card").style.color = "blue"
+                }
+
+                var cardElementBtn = document.createElement("button")
+                cardElementBtn.id = "cardBtn"
+                cardElementBtn.className = "cardBtn" + i
+
+                var cardElementCont = document.createElement("h2")
+                cardElementCont.id = "cardText"
+                cardElementCont.innerText = myJson[i]
+                cardElementCont.className = "cardText" + i
+
+                cardElementClone.appendChild(cardElementBtn)
+                cardElementClone.appendChild(cardElementCont)
+
+                containerElement.appendChild(cardElementClone)
+            }
+        }
+
+        window.addEventListener('load', async function() {
+            //console.log('All assets are loaded')
+            await userAction()
+            document.getElementById("p2").style.color = "red"
+        })
+
+        
+
+    </script>
+</body>
+</html>
