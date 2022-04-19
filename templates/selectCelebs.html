@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        #card {display: flex; align-items: center; width: 50vw; justify-content: space-between; padding-left: 10vw;}
-        #cardText {float: right;}
-        #cardBtn {border-radius: 60%; border:10% solid black; width: 2vw; height: 3vh; color: darkgray;}
+        .card {display: flex; align-items: center; width: 50vw; justify-content: space-between; padding-left: 10vw;}
+        .cardText {float: right;}
+        .cardBtn {border-radius: 60%; border:10% solid black; width: 2vw; height: 3vh; color: darkgray;}
     </style>
+    <!-- <style>
+        .card {display: flex; align-items: center; width: 50vw; justify-content: space-between; padding-left: 10vw;}
+        /* .cardText {float: right;} */
+    </style> -->
 </head>
 <body>
     <p id="p2"> his</p>
     <div id="container">
-        <div id="card">
-        </div>
+        <button id="startGame" name="">start</button>
+        <!-- <div id="card">
+        </div> -->
     </div>
     
     <script>
+        var celebrities = {}
+
         const userAction = async () => {
             console.log(window.location.origin)
             var url = window.location.origin + "/celebData"
@@ -29,25 +36,38 @@
 
             var containerElement = document.getElementById("container")
             for(var i=0; i<myJson.length; i++){
-                var cardElementClone = document.getElementById("card").cloneNode(true)
-                cardElementClone.className = "card" + i
+                celebrities[myJson[i]] = false
+                var cardElementClone = document.createElement("div")
+                //var cardElementClone = document.getElementById("card").cloneNode(true)
+                cardElementClone.id = myJson[i]
+                cardElementClone.className = "card"
+                cardElementClone.name = myJson[i]
                 cardElementClone.onclick = function(){
-                    console.log(this.getAttribute("class"))
+                    console.log(this.getAttribute("id"))
                     var id = this.getAttribute("class").substring(this.getAttribute("class").length-1)
-                    
-                    var cardId = "card" + id
+                    console.log(this.style.backgroundColor)
+                    if(this.style.backgroundColor == ""){
+                        this.style.backgroundColor = "blue"
+                        celebrities[this.getAttribute("id")] = true
+                    }
+                    else{
+                        this.style.backgroundColor = ""
+                        celebrities[this.getAttribute("id")] = false
+                    } 
+                    //var cardId = "card" + id
                     //document.getElementsByClassName(cardId).style = "background-color: blue;"
-                    document.getElementsById("card").style.color = "blue"
+                    //document.getElementsById("card").style.color = "blue"
+                    //this.g
                 }
 
                 var cardElementBtn = document.createElement("button")
-                cardElementBtn.id = "cardBtn"
-                cardElementBtn.className = "cardBtn" + i
+                cardElementBtn.className = "cardBtn"
+                cardElementBtn.id = "cardBtn" + i
 
                 var cardElementCont = document.createElement("h2")
-                cardElementCont.id = "cardText"
+                cardElementCont.className = "cardText"
                 cardElementCont.innerText = myJson[i]
-                cardElementCont.className = "cardText" + i
+                cardElementCont.id = "cardText" + i
 
                 cardElementClone.appendChild(cardElementBtn)
                 cardElementClone.appendChild(cardElementCont)
@@ -62,7 +82,33 @@
             document.getElementById("p2").style.color = "red"
         })
 
-        
+        document.getElementById("startGame").addEventListener("click", function(){
+            var celebritiesPushed = []
+            for (const key in celebrities) {
+                if (celebrities.hasOwnProperty.call(celebrities, key)) {
+                    const element = celebrities[key];
+                    if(element == true){
+                        celebritiesPushed.push(key);
+                    }
+                    //console.log(element)
+                    
+                }
+            }
+
+            console.log(celebritiesPushed)
+            var body = {"celebrities": celebritiesPushed}
+            fetch("/game/start", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(body)
+            }).then(async(res) => {
+                //window.location.href = "/game/" + res
+                //var response = JSON.parse(res)
+                var response = await res.json()
+                console.log("Request complete! response:", response);
+                window.location.href = "/game/" + response.message._id
+            });
+        })
 
     </script>
 </body>

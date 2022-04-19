@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/ljtron/FinalProjectCIS1051#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongodb": "^4.5.0",
+    "mongoose": "^6.3.0",
     "nodemon": "^2.0.15",
     "socket.io": "^4.4.1",
     "twit": "^2.2.11",
