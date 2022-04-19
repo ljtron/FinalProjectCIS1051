@@ -1,0 +1,149 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .tweetContainer{width: 50vw; justify-content: center; align-content: center; height: 25vh;}
+        .tweetHeader{display: flex; justify-content: space-between; align-content: center; }
+        .tweetUserInfo{display: flex; align-content: center; width: 25%;}
+        /* .tweetAvatar{display: flex; justify-content: center; align-content: center; background-color: darkgray; border-radius: 85%; border: 60% solid black; margin: 0 auto; width: 50%; vertical-align: middle;} */
+        /* .tweetFooter{display: flex;} */
+        .tweetAvatar{display: flex; justify-content: center; align-content: center; width: 50%; background-color: darkgray; height: 100%; border-radius: 50%; vertical-align: middle; align-items:center; margin: auto;}
+    </style>
+</head>
+<body>
+
+    <div class="gameBody">
+
+        <div class="tweetContainer">
+            <div class="tweetHeader">
+                <div class="tweetUserInfo">
+                    <div class="tweetAvatar">
+                        Avatar
+                        <!-- <p style="font-size: 50%; text-align: center; justify-self: center; vertical-align: middle;">A</p> -->
+                        <!-- <h3 style="text-align: center; white-space: nowrap;">A</h3> -->
+                    </div>
+
+                    <div class="tweetName">
+                        <p>Name</p>
+                        <p>@username</p>
+                    </div>
+                </div>
+
+                <img src="./assets/twitterLogo.png" alt="twitter logo" style="width:10%;height:20%; padding-top: 5%;">
+            </div>
+
+            <div class="tweetContent" style="height: 33%;">
+                <h3 id="tweet">tweet</h1>
+            </div>
+
+            <!-- <div class="tweetFooter">
+
+            </div> -->
+        </div>
+
+        <div id="celebSelect" style="padding-top: 30%;">
+
+        </div>
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+    
+        const tweetElement = document.getElementById('tweet');
+        const celebSelectElement = document.getElementById("celebSelect")
+        //var form = document.getElementById('form');
+        //var input = document.getElementById('input');
+        var id;
+        var dataFromServer;
+        var correct;
+        var score = 0;
+        var round = 1;
+        // upload the amount correct to the server when game is done
+
+        const shuffleArray = array => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        //https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+
+        const nextQuestion = () =>{
+            round += 1
+            celebSelectElement.innerHTML = ""
+            socket.emit('gameSingle', {start: false, roomId: id, next: true, round: round});
+        }
+
+        const updateScore = () => {
+
+            fetch("/game/correct/" + id, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({score: score})
+            }).then(async(res) => {
+                //window.location.href = "/game/" + res
+                //var response = JSON.parse(res)
+                var response = await res.json()
+                console.log("Game finished")
+                window.location.href = "/game/finished/" + id
+                // console.log("Request complete! response:", response);
+                // window.location.href = "/game/" + response.message._id
+            });
+        }
+
+        socket.on('gameSingle', async function(msg) {
+            dataFromServer = msg
+            if(msg.done == true){
+                await updateScore()
+            }
+            console.log(dataFromServer)
+
+            shuffleArray(msg.celebs)
+            //console.log(data)
+            for(var i=0; i<msg.celebs.length; i++){
+                var celebElement = document.createElement("p")
+                celebElement.innerHTML = msg.celebs[i]
+                celebElement.onclick = function (){
+                    console.log(this.innerHTML)
+                    if(this.innerHTML == dataFromServer.answer){
+                        console.log("correct")
+                        correct = true
+
+                        // do something after it is correct
+                        score += 100
+                        correct = ""
+                        nextQuestion()
+                    }
+                    else{
+                        correct = false
+
+                        // do something after it is correct
+                        correct = ""
+                        nextQuestion()
+                    }
+                }
+
+                celebSelectElement.appendChild(celebElement)
+            }
+
+            tweetElement.innerHTML = msg.tweet
+        });
+        window.addEventListener('load', async function() {
+            //console.log('All assets are loaded')
+            var pathArray = window.location.pathname.split('/');
+            id = pathArray[pathArray.length - 1]
+
+            console.log(id)
+            socket.emit('gameSingle', {start: true, roomId: id, round: round});
+        })
+    </script>
+</body>
+</html>
