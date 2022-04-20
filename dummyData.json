@@ -1,45 +1,123 @@
 {
     "Britney Spears":{
         "info": "Occaecat duis est Lorem id. Ex do tempor dolore nisi amet ut proident reprehenderit qui ex sint. Aliquip ullamco nisi aliqua occaecat elit sunt. Nostrud fugiat ullamco culpa est excepteur veniam et incididunt adipisicing quis quis Lorem. Ea ad dolore quis aute aliquip ex. Quis ex adipisicing sunt pariatur. Sunt et nostrud in veniam laborum mollit.",
-        "tweets": ["All you need is love and the beach …. 🌸👙💋 !!!!!"]
-    },
+        "tweets": ["All you need is love and the beach …. 🌸👙💋 !!!!!"],
+        "handle": "@britneyspears",
+        "twitterId":"16409683"
+
+    },    
     "Bill Gates":{
         "info": "",
-        "tweets": ["After 20 years of stunning advances toward global goals to improve health and reduce poverty, the COVID-19 pandemic stopped progress in its tracks. In our foundation’s Goalkeepers report, we survey the damage and discuss how to start reversing it."]
+        "tweets": ["After 20 years of stunning advances toward global goals to improve health and reduce poverty, the COVID-19 pandemic stopped progress in its tracks. In our foundation’s Goalkeepers report, we survey the damage and discuss how to start reversing it."],
+        "handle": "@BillGates",
+        "twitterId":"50393960"
+
     },
     "Justin Timberlake":{
         "info": "",
-        "tweets": ["Spring Summer 2020. Thanks for this, Internet."]
+        "tweets": ["Spring Summer 2020. Thanks for this, Internet."],
+        "handle": "@jtimberlake",
+        "twitterId":"26565946"
+
     },
     "Selena Gomez":{
         "info": "",
-        "tweets": ["The official video for Past Life premieres Tuesday at 9 am PT/ 12 pm ET 👁 http://smarturl.it/PastLifeOfficialVid \n@Iamtrevordaniel"]
+        "tweets": ["The official video for Past Life premieres Tuesday at 9 am PT/ 12 pm ET 👁 http://smarturl.it/PastLifeOfficialVid \n@Iamtrevordaniel"],
+        "handle": "@selenagomez",
+        "twitterId":"23375688"
+
     },
     "Kim Kardashian West":{
         "info": "",
-        "tweets": ["For all of the things that could be trending, this is super funny to me that so many are concerned about a pic i posted 2 years ago. It’s the sweet corn truffle pasta from the best restaurant ever, Georgio Baldi in Santa Monica. They are open for take out. I highly recommend."]
+        "tweets": ["For all of the things that could be trending, this is super funny to me that so many are concerned about a pic i posted 2 years ago. It’s the sweet corn truffle pasta from the best restaurant ever, Georgio Baldi in Santa Monica. They are open for take out. I highly recommend."],
+        "handle": "@KimKardashian",
+        "twitterId":"25365536"
+
     },
     "Narendra Modi":{
         "info": "",
         "tweets": [
             "Best wishes to the Chief Minister of Mizoram, Mr.\n @ZoramthangaCM \n on his birthday. One of the senior most and respected leaders in our polity, he has worked extensively for the welfare of Mizoram. May Almighty bless him with a long and healthy life in service of the people.",
             "hi"
-        ]
+        ],
+        "handle": "@narendramodi",
+        "twitterId":"18839785"
+
     },
     "Ellen DeGeneres":{
         "info": "",
-        "tweets": ["Seeing everyone’s posts about Carl Reiner makes you realize what an incredible legacy of laughter he left behind. I was inspired by his talent and his humanity, and I send love to his family."]
+        "tweets": ["Seeing everyone’s posts about Carl Reiner makes you realize what an incredible legacy of laughter he left behind. I was inspired by his talent and his humanity, and I send love to his family."],
+        "handle": "@TheEllenShow",
+        "twitterId":"15846407"
+
     },
     "Lady Gaga":{
         "info": "",
-        "tweets": ["Welcome to #Chromatica"]
+        "tweets": ["Welcome to #Chromatica"],
+        "handle": "@ladygaga",
+        "twitterId":"14230524"
+
     },
-    "Ariana Grande":{
-        "info": "",
-        "tweets": ["Hi Ariana here"]
+    "Doja Cat":{
+        "handle": "@DojaCat",
+        "twitterId":"568545739"
+
     },
     "Taylor Swift":{
         "info": "",
-        "tweets": ["when you’re proud of your buns so you post them on the internet"]
-    }
+        "tweets": ["when you’re proud of your buns so you post them on the internet"],
+        "handle": "@taylorswift13",
+        "twitterId":"17919972"
+
+    },
+    "Kanye West":{
+        "handle":"@kanyewest",
+        "twitterId":"169686021"
+
+    },
+    "Dean Norris":{
+        "handle":"@deanjnorris",
+        "twitterId":"802939002"
+
+    },
+    "Barrack Obama":{
+        "handle":"@BarackObama",
+        "twitterId":"813286"
+
+    },
+    "Ninja (Richard Blevins)":{
+        "handle":"@Ninja",
+        "twitterId":"214201922"
+
+    },
+    "Elon Musk":{
+        "handle":"@elonmusk",
+        "twitterId":"44196397"
+        
+    },
+    "Robert Downey Jr.":{
+        "handle":"@RobertDowneyJr",
+        "twitterId":"47786101"
+
+    },
+    "Morgan Freeman":{
+        "handle":"@morgan_freeman",
+        "twitterId":"1205263338965323776"
+    
+
+    },
+    "Harrison Ford":{
+        "handle":"@harrisonford_",
+        "twitterId":"283226046"
+    
+    },
+    "Rihanna":{
+        "handle":"@rihanna",
+        "twitterId":"79293791"
+
+    },
+    "John Cena":{
+        "handle":"@JohnCena",
+        "twitterId":"141664648"
+    }   
 }

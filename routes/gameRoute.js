@@ -44,7 +44,7 @@ route.get("/status/:gameId", (req,res) =>{
         }
         else{
             console.log(game)
-            res.json({gameStatus: game})
+            res.json({gameStatus: game, username: req.session.userInfo.username})
             //res.sendFile(process.cwd() + "/templates/finishedGame.html")
         }
     })
@@ -72,7 +72,7 @@ route.post("/start", (req,res)=>{
     console.log(req.body.celebrities.length)
     var model = new gameModel({
         owner: "player1",
-        players: ["player1"],
+        players: [req.session.userInfo.username],
         celebrities: req.body.celebrities,
         type: "singlePlayer",
         rounds: req.body.celebrities.length * 3

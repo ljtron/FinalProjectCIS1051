@@ -4,8 +4,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        .container{display: flex; width: 50vw; justify-content: space-around;}
+    </style>
 </head>
 <body>
-    
+
+    <div class="container">
+        <div class="left" style="float:left; width: 35%;">
+            <div class="topLeft" style="display: flex; justify-content: space-between;">
+                <p id="playerScore">score</p>
+                <p id="playerPercent">percent</p>
+            </div>
+
+            <div class="bottomLeft" style="display: flex; justify-content: space-between;">
+                <p id="gameCorrect">correct</p>
+                <p id="gameIncorrect">incorrect</p>
+            </div>
+
+        </div>
+        <div class="right" id="listcelebrity" style="float: right">
+            <p>list of celebrities</p>
+        </div>
+    </div>
+
+
+    <script>
+        var pathArray = window.location.pathname.split('/');
+        const id = pathArray[pathArray.length - 1]
+
+        const loadData = async() =>{
+            var url = window.location.origin + "/game/status/" + id
+            const response = await fetch(url);
+            const myJson = await response.json();
+
+            console.log(myJson)
+
+            var celebs = myJson.gameStatus.celebrities
+
+            var listofcelebElement = document.getElementById("listcelebrity")
+            for(var i=0; i<celebs.length; i++){
+                var celebElement = document.createElement("p")
+                celebElement.innerHTML = celebs[i]
+                celebElement.className = "celebrityElement"
+                listofcelebElement.appendChild(celebElement)
+            }
+
+            var correct = myJson.gameStatus.score.username/100
+
+            document.getElementById("playerScore").innerHTML = myJson.gameStatus.score.username
+
+            // come back and change the username
+            document.getElementById("playerPercent").innerHTML = ((correct) / (celebs.length * 3)).toFixed(2)
+            document.getElementById("gameCorrect").innerHTML = correct
+            document.getElementById("gameIncorrect").innerHTML = (celebs.length * 3) - correct
+        }
+
+        window.addEventListener("load", async function(){
+            loadData()
+        })
+    </script>
 </body>
 </html>

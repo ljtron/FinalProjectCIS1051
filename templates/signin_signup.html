@@ -4,6 +4,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color:aquamarine;
+        }
+        .bodyContainer{width:50vw; display: flex; justify-content: space-between;}
+        .left{float:left; vertical-align: middle; width: 30%;}
+        .right{float: right; width: 30%;}
+        .submitBtn{
+            border-radius: 10%;
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -11,13 +27,96 @@
     </div>
 
     <div class="bodyContainer">
-        <div class="left">
+        <div class="left" id="sign up">
+            <h1>Sign up</h1>
+            <input type="email" name="email" id="emailsupInp" placeholder="email@email.com">
+            <br>
+            <input type="text" name="name" id="namesupInp" placeholder="your name">
+            <br>
+            <input type="text" name="username" id="usernamesupInp" placeholder="username">
+            <br>
+            <input type="password" name="password" id="passwordsupInp" placeholder="password">
+            <br>
+            <button class="submitBtn" id="signUpBTN">sign Up</button>
 
         </div>
 
-        <div class="right">
-            
+        <div class="right" id="sign in">
+            <h1>Sign in</h1>
+            <input type="email" name="email" id="emailSinInp" placeholder="email@email.com">
+            <br>
+            <input type="password" name="password" id="passwordSinInp" placeholder="password">
+            <br>
+            <button class="submitBtn" id="signInBTN">sign In</button>
         </div>
     </div>
+
+    <script>
+        document.getElementById("signInBTN").addEventListener("click", () => {
+            if(document.getElementById("passwordSinInp").value.length < 0){
+                alert("password can't be empty")
+            }
+            else if(document.getElementById("emailSinInp").value.length < 0){
+                alert("email can't be empty")
+            }
+            else{
+                var body = {
+                    "password": document.getElementById("passwordSinInp").value,
+                    "email": document.getElementById("emailSinInp").value
+                }
+                fetch("/user/signin", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(body)
+                }).then(async(res) => {
+                    //window.location.href = "/game/" + res
+                    //var response = JSON.parse(res)
+                    var response = await res.json()
+                    if(response.error == true){
+                        alert("Either incorrect password or email")
+                    }
+                    else{
+                        console.log("Request complete! response:", response);
+                        window.location.href = "/"
+                    }
+                    //window.location.href = "/" 
+                }); 
+            }
+        })
+
+        document.getElementById("signUpBTN").addEventListener("click", () => {
+            if(document.getElementById("passwordsupInp").value.length < 6){
+                alert("password has to greater than 6 characters")
+            }
+            else if(document.getElementById("emailsupInp").value.length < 0){
+                alert("email can't be empty")
+            }
+            else if(document.getElementById("namesupInp").value.length < 0){
+                alert("name can't be empty")
+            }
+            else if(document.getElementById("usernamesupInp").value.length < 0){
+                alert("username can't be empty")
+            }
+            else{
+                var body = {
+                    "password": document.getElementById("passwordsupInp").value,
+                    "username": document.getElementById("usernamesupInp").value,
+                    "name": document.getElementById("namesupInp").value,
+                    "email": document.getElementById("emailsupInp").value
+                }
+                fetch("/user/signup", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(body)
+                }).then(async(res) => {
+                    //window.location.href = "/game/" + res
+                    //var response = JSON.parse(res)
+                    var response = await res.json()
+                    console.log("Request complete! response:", response);
+                    window.location.href = "/" 
+                });
+            }
+        })
+    </script>
 </body>
 </html>

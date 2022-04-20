@@ -12,11 +12,13 @@
         /* .tweetAvatar{display: flex; justify-content: center; align-content: center; background-color: darkgray; border-radius: 85%; border: 60% solid black; margin: 0 auto; width: 50%; vertical-align: middle;} */
         /* .tweetFooter{display: flex;} */
         .tweetAvatar{display: flex; justify-content: center; align-content: center; width: 50%; background-color: darkgray; height: 100%; border-radius: 50%; vertical-align: middle; align-items:center; margin: auto;}
+        /* .celebClass{} */
+
     </style>
 </head>
 <body>
 
-    <div class="gameBody">
+    <div class="gameBody" id="gameBodyId">
 
         <div class="tweetContainer">
             <div class="tweetHeader">
@@ -51,12 +53,24 @@
 
     </div>
 
+    <button id="testBTN">correct test</button>
+    <button id="testInBTN">Incorrect test</button>
+
+    <div id="correctAnime" hidden>
+        <img src="/assets/correctGif.webp" alt="Computer man" style="width:100%;height:100%;">
+    </div>
+    <div id="IncorrectAnime" hidden>
+        <img src="/assets/incorrectGif.webp" alt="Computer man" style="width:100%;height:100%;">
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
     
         const tweetElement = document.getElementById('tweet');
         const celebSelectElement = document.getElementById("celebSelect")
+        const gameBodyElement = document.getElementById("gameBodyId")
+        const testButton = document.getElementById("testBTN")
         //var form = document.getElementById('form');
         //var input = document.getElementById('input');
         var id;
@@ -65,6 +79,41 @@
         var score = 0;
         var round = 1;
         // upload the amount correct to the server when game is done
+
+        
+
+        testButton.addEventListener("click", function(){
+            document.getElementById("correctAnime").hidden = false
+            if(gameBodyElement.hidden){
+                document.getElementById("correctAnime").hidden = true
+                gameBodyElement.hidden = false
+                //document.getElementById("correctAnime").style.display = "block"
+            }
+            else{
+                gameBodyElement.hidden = true
+                document.getElementById("correctAnime").hidden = false
+                // gameBodyElement.style.display = "block"
+                // document.getElementById("correctAnime").style.display = "none"
+            }
+            //gameBodyElement.hidden = true
+            
+            
+        })
+
+        document.getElementById("testInBTN").addEventListener("click", function(){
+            document.getElementById("correctAnime").hidden = false
+            if(gameBodyElement.style.display == "block"){
+                gameBodyElement.style.display = "none"
+                document.getElementById("correctAnime").style.display = "block"
+            }
+            else{
+                gameBodyElement.style.display = "block"
+                document.getElementById("correctAnime").style.display = "none"
+            }
+            //gameBodyElement.hidden = true
+            
+            
+        })
 
         const shuffleArray = array => {
             for (let i = array.length - 1; i > 0; i--) {
@@ -111,6 +160,7 @@
             for(var i=0; i<msg.celebs.length; i++){
                 var celebElement = document.createElement("p")
                 celebElement.innerHTML = msg.celebs[i]
+                celebElement.className = "celebClass"
                 celebElement.onclick = function (){
                     console.log(this.innerHTML)
                     if(this.innerHTML == dataFromServer.answer){
@@ -118,16 +168,35 @@
                         correct = true
 
                         // do something after it is correct
+                        gameBodyElement.hidden = true
+                        document.getElementById("correctAnime").hidden = false
                         score += 100
                         correct = ""
-                        nextQuestion()
+                        setTimeout(
+                            () =>{
+                              
+                                document.getElementById("correctAnime").hidden = true
+                                gameBodyElement.hidden = false
+                                nextQuestion()
+                            }
+                            , 3000
+                        )
+                        //nextQuestion()
                     }
                     else{
                         correct = false
 
                         // do something after it is correct
+                        gameBodyElement.hidden = true
+                        document.getElementById("IncorrectAnime").hidden = false
                         correct = ""
-                        nextQuestion()
+                        setTimeout(() =>{
+                              
+                              document.getElementById("IncorrectAnime").hidden = true
+                              gameBodyElement.hidden = false
+                              nextQuestion()
+                          }, 3000)
+                        //nextQuestion()
                     }
                 }
 
@@ -142,6 +211,8 @@
             id = pathArray[pathArray.length - 1]
 
             console.log(id)
+
+            //uncomment this part
             socket.emit('gameSingle', {start: true, roomId: id, round: round});
         })
     </script>
