@@ -1,9 +1,7 @@
 {
-    "Britney Spears":{
-        "info": "Occaecat duis est Lorem id. Ex do tempor dolore nisi amet ut proident reprehenderit qui ex sint. Aliquip ullamco nisi aliqua occaecat elit sunt. Nostrud fugiat ullamco culpa est excepteur veniam et incididunt adipisicing quis quis Lorem. Ea ad dolore quis aute aliquip ex. Quis ex adipisicing sunt pariatur. Sunt et nostrud in veniam laborum mollit.",
-        "tweets": ["All you need is love and the beach …. 🌸👙💋 !!!!!"],
-        "handle": "@britneyspears",
-        "twitterId":"16409683"
+    "Justin Bieber":{
+        "handle": "@justinbieber",
+        "twitterId":"27260086"
 
     },    
     "Bill Gates":{
@@ -34,14 +32,9 @@
         "twitterId":"25365536"
 
     },
-    "Narendra Modi":{
-        "info": "",
-        "tweets": [
-            "Best wishes to the Chief Minister of Mizoram, Mr.\n @ZoramthangaCM \n on his birthday. One of the senior most and respected leaders in our polity, he has worked extensively for the welfare of Mizoram. May Almighty bless him with a long and healthy life in service of the people.",
-            "hi"
-        ],
-        "handle": "@narendramodi",
-        "twitterId":"18839785"
+    "KATY PERRY":{
+        "handle": "@katyperry",
+        "twitterId":"21447363"
 
     },
     "Ellen DeGeneres":{
@@ -58,9 +51,9 @@
         "twitterId":"14230524"
 
     },
-    "Doja Cat":{
-        "handle": "@DojaCat",
-        "twitterId":"568545739"
+    "Cristiano Ronaldo":{
+        "handle": "@cristiano",
+        "twitterId":"155659213"
 
     },
     "Taylor Swift":{
@@ -70,14 +63,9 @@
         "twitterId":"17919972"
 
     },
-    "Kanye West":{
-        "handle":"@kanyewest",
-        "twitterId":"169686021"
-
-    },
-    "Dean Norris":{
-        "handle":"@deanjnorris",
-        "twitterId":"802939002"
+    "jimmy fallon":{
+        "handle":"@jimmyfallon",
+        "twitterId":"15485441"
 
     },
     "Barrack Obama":{
@@ -103,12 +91,11 @@
     "Morgan Freeman":{
         "handle":"@morgan_freeman",
         "twitterId":"1205263338965323776"
-    
 
     },
-    "Harrison Ford":{
-        "handle":"@harrisonford_",
-        "twitterId":"283226046"
+    "LeBron James":{
+        "handle":"@kingjames",
+        "twitterId":"23083404"
     
     },
     "Rihanna":{

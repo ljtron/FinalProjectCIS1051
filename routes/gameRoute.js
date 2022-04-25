@@ -23,7 +23,7 @@ route.get("/finished/:gameId", (req,res) =>{
     //console.log(process.cwd() + "/templates/game.html")
     //res.json("hi")
     console.log(req.params.gameId)
-    gameModel.findOne({ 'id': req.params.gameId }, function (err, game) {
+    gameModel.findOne({ _id: req.params.gameId }, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
@@ -57,7 +57,7 @@ route.post("/correct/:gameId", (req,res) =>{
     //console.log(req.params.gameId)
 
     // you need to change the username
-    gameModel.findOneAndUpdate({ 'id': req.params.gameId }, {"score": {"username": req.body.score}}, function (err, game) {
+    gameModel.findOneAndUpdate({ _id: req.params.gameId }, {"score": {"username": req.body.score}}, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }

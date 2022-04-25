@@ -1,6 +1,7 @@
 var express = require("express")
 var route = express.Router()
 const userModel = require("../models/userModel")
+const gameModel = require("../models/gameModel")
 const bcrypt = require("bcrypt")
 
 route.post("/signin", function(req,res){
@@ -12,6 +13,8 @@ route.post("/signin", function(req,res){
         else{
             bcrypt.compare(req.body.password, message.password, function(error, result) {
                 if(result){
+                    res.cookie('username', message.username);
+                    res.cookie('name', message.name);
                     req.session.userInfo = message
                     res.json({message: message})
                 }
@@ -44,6 +47,8 @@ route.post("/signup", function(req,res){
                 }
                 else{
                   console.log("Message: " + message)
+                  res.cookie('username', message.username);
+                  res.cookie('name', message.name);
                   req.session.userInfo = message
                   res.json({message: message})
                 }
@@ -53,8 +58,23 @@ route.post("/signup", function(req,res){
     //res.json("signup")
 })
 
+route.get("/accountData", function(req,res){
+    gameModel.find({"players": req.session.userInfo.username}, function(err, message){
+        res.json({data: message})
+    })
+})
+
+route.get("/logoff", function(req,res){
+    req.session.userInfo = null
+    res.sendFile(process.cwd() + "/templates/signin_signup.html")
+})
+
 route.get("/creditials", function(req,res){
     res.sendFile(process.cwd() + "/templates/signin_signup.html")
+})
+
+route.get("/account", function(req,res){
+    res.sendFile(process.cwd() + "/templates/account.html")
 })
 
 

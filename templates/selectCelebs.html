@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .card {display: flex; align-items: center; width: 50vw; justify-content: space-between; padding-left: 10vw;}
+        .card {display: flex; align-items: center; width: 30vw; justify-content: space-between; padding-left: 10vw;}
         .cardText {float: right;}
         .cardBtn {border-radius: 60%; border:10% solid black; width: 2vw; height: 3vh; color: darkgray;}
     </style>
@@ -15,15 +15,29 @@
     </style> -->
 </head>
 <body>
-    <p id="p2"> his</p>
-    <div id="container">
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; align-content: center">
+            <p style="font-size: 1rem;">Amount of rounds you will play: </p>
+            <p id="p2" style="font-size: 1rem;"></p>
+        </div>
+
         <button id="startGame" name="">start</button>
-        <!-- <div id="card">
-        </div> -->
+    </div>
+    <!-- <span>Amount of rounds you will play: <p id="p2"></p></span> -->
+    <div id="container" style="display: inline;">
+        
+        <div id="containerLeftSide" style="float: left; width: 50%;" >
+
+        </div>
+        <div id="containerRightSide" style="float: right; width: 50%;">
+
+        </div>
     </div>
     
     <script>
         var celebrities = {}
+        var rounds = 0
 
         const userAction = async () => {
             console.log(window.location.origin)
@@ -35,7 +49,16 @@
             console.log(myJson)
 
             var containerElement = document.getElementById("container")
+            var side = 1
             for(var i=0; i<myJson.length; i++){
+                if(side == 1){
+                    containerElement = document.getElementById("containerLeftSide")
+                    side = side * -1
+                }
+                else{
+                    containerElement = document.getElementById("containerRightSide")
+                    side = side * -1
+                }
                 celebrities[myJson[i]] = false
                 var cardElementClone = document.createElement("div")
                 //var cardElementClone = document.getElementById("card").cloneNode(true)
@@ -49,10 +72,14 @@
                     if(this.style.backgroundColor == ""){
                         this.style.backgroundColor = "blue"
                         celebrities[this.getAttribute("id")] = true
+                        rounds += 3
+                        document.getElementById("p2").innerHTML = rounds
                     }
                     else{
                         this.style.backgroundColor = ""
                         celebrities[this.getAttribute("id")] = false
+                        rounds -= 3
+                        document.getElementById("p2").innerHTML = rounds
                     } 
                     //var cardId = "card" + id
                     //document.getElementsByClassName(cardId).style = "background-color: blue;"
@@ -95,19 +122,24 @@
                 }
             }
 
-            console.log(celebritiesPushed)
-            var body = {"celebrities": celebritiesPushed}
-            fetch("/game/start", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify(body)
-            }).then(async(res) => {
-                //window.location.href = "/game/" + res
-                //var response = JSON.parse(res)
-                var response = await res.json()
-                console.log("Request complete! response:", response);
-                window.location.href = "/game/" + response.message._id
-            });
+            if(celebritiesPushed.length > 4){
+                console.log(celebritiesPushed)
+                var body = {"celebrities": celebritiesPushed}
+                fetch("/game/start", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(body)
+                }).then(async(res) => {
+                    //window.location.href = "/game/" + res
+                    //var response = JSON.parse(res)
+                    var response = await res.json()
+                    console.log("Request complete! response:", response);
+                    window.location.href = "/game/" + response.message._id
+                });
+            }
+            else{
+                alert("You need to choose at least 5 celebrities")
+            }
         })
 
     </script>

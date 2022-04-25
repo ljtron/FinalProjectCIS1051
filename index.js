@@ -42,7 +42,7 @@ const port = 3000
 
 app.get('/', (req, res) => {
   console.log(req.session.userInfo)
-  if(req.session.userInfo){
+  if(req.session.userInfo != null){
     res.sendFile(__dirname + '/templates/index.html')
   }
   else{
@@ -67,9 +67,10 @@ io.on('connection', (socket) => {
     console.log(message)
     //dataEmit = {}
     if(message['start'] == true){
+      console.log("start")
       socket.join(message['roomId'])
 
-      gameModel.findOne({ 'id': message['roomId'] }, function (err, game) {
+      gameModel.findOne({ _id: message.roomId }, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
@@ -85,8 +86,8 @@ io.on('connection', (socket) => {
               "done": false
             }
 
-            var celebritySelected = keys[Math.floor(Math.random()*keys.length)]
-            var tweeterId = "23613479"
+            var celebritySelected = game.celebrities[Math.floor(Math.random()*game.celebrities.length)]
+            var tweeterId = dummyData[celebritySelected].twitterId
             var url = "https://api.twitter.com/2/users/" + tweeterId + "/tweets"
             dataEmit["answer"] = celebritySelected
             dummycelebs.push(celebritySelected)
@@ -106,12 +107,18 @@ io.on('connection', (socket) => {
                 //dummycelebs.push(celebritySelected)
 
                 for(var i=0; i<3; i++){
-                  var celebritySelected = keys[Math.floor(Math.random()*keys.length)]
+                  var celebritySelected = game.celebrities[Math.floor(Math.random()*game.celebrities.length)]
                   dummycelebs.push(celebritySelected)
                 }
 
                 dataEmit["celebs"] = dummycelebs
                 io.in(message['roomId']).emit("gameSingle", dataEmit)
+                //console.log("by the find and update" + game)
+
+                gameModel.findOneAndUpdate({_id: message.roomId}, { $push: { questions: dataEmit } }, function(error, result){
+                  console.log("error when the data is pushed " + error)
+                  console.log("first call when the data is pushed " + result)
+                })
 
                 //return response.data
                 //res.send(JSON.stringify(response.data));
@@ -165,7 +172,7 @@ io.on('connection', (socket) => {
       
     }
     else if(message['next'] == true){
-      gameModel.findOne({ 'id': message['roomId']}, function (err, game) {
+      gameModel.findOne({ _id: message.roomId}, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
@@ -173,7 +180,7 @@ io.on('connection', (socket) => {
             console.log("This is the game: " + game)
             console.log(message['round'])
             console.log(game.rounds)
-            if(message['round'] == game.rounds){
+            if(message['round'] > game.rounds){
               io.in(message['roomId']).emit("gameSingle", {done: true})
             }
             else{
@@ -187,8 +194,8 @@ io.on('connection', (socket) => {
                 "done": false
               }
 
-              var celebritySelected = keys[Math.floor(Math.random()*keys.length)]
-              var tweeterId = "23613479"
+              var celebritySelected = game.celebrities[Math.floor(Math.random()*game.celebrities.length)]
+              var tweeterId = dummyData[celebritySelected].twitterId
               var url = "https://api.twitter.com/2/users/" + tweeterId + "/tweets"
               dataEmit["answer"] = celebritySelected
               dummycelebs.push(celebritySelected)
@@ -208,12 +215,17 @@ io.on('connection', (socket) => {
                   //dummycelebs.push(celebritySelected)
 
                   for(var i=0; i<3; i++){
-                    var celebritySelected = keys[Math.floor(Math.random()*keys.length)]
+                    var celebritySelected = game.celebrities[Math.floor(Math.random()*game.celebrities.length)]
                     dummycelebs.push(celebritySelected)
                   }
 
                   dataEmit["celebs"] = dummycelebs
                   io.in(message['roomId']).emit("gameSingle", dataEmit)
+
+                  gameModel.findOneAndUpdate({_id: message.roomId}, { $push: { questions: dataEmit } }, function(error, result){
+                    console.log("error when the data is pushed " + error)
+                    console.log("second call when the data is pushed " + result)
+                  })
 
                   //return response.data
                   //res.send(JSON.stringify(response.data));

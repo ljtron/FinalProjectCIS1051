@@ -8,7 +8,8 @@ const Game = new Schema ({
     type: { type: String, required: true },
     score: {},
     correct: {type: Number},
-    rounds: {type: Number, required: true}
+    rounds: {type: Number, required: true},
+    questions: {type: Array}
 })
 
 module.exports = mongoose.model('game', Game)
