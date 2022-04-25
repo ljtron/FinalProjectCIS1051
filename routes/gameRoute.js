@@ -38,7 +38,7 @@ route.get("/status/:gameId", (req,res) =>{
     //console.log(process.cwd() + "/templates/game.html")
     //res.json("hi")
     console.log(req.params.gameId)
-    gameModel.findOne({ 'id': req.params.gameId }, function (err, game) {
+    gameModel.findOne({ _id: req.params.gameId }, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
