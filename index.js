@@ -33,12 +33,13 @@ const userRoute = require("./routes/userRoute")
 
 app.use("/game", gameRoute)
 app.use("/user", userRoute)
+//app.use(express.static('templates'))
 app.use('/assets', express.static(__dirname + '/templates/assets'));
 
 
 
 
-const port = 3000
+const port = 8000
 
 app.get('/', (req, res) => {
   console.log(req.session.userInfo)
@@ -267,5 +268,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(port, () => {
-  console.log('listening on *:3000');
+  console.log('listening on *:8000');
 });
