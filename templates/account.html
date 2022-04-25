@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body{
+            margin: 0;
+
+        }
+
+        .topnav {
+        overflow: hidden;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a.active {
+        background-color: #5c90df;
+        color: white;
+        }
+
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .gameDiv:hover{
+            background-color: darkgray;
+        }
+    </style>
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="topnav">
+        <div class="">
+            <a class="active" href="/user/account">Account</a>
+            <a href="/">Home</a>
+        </div>
+        
+        <div>
+            <a href="/user/logoff">logoff</a>
+        </div>
+    </div>
+    <!-- https://www.w3schools.com/howto/howto_js_topnav.asp -->
+    <!-- <h1>Account</h1> -->
+
+    <div id="games" style="display: inline;">
+
+        <div id="gamesLeftSide" style="width: 50%; display: flex; flex-direction: column; float: left;">
+
+        </div>
+
+        <div id="gamesRightSide" style="width: 50%; display: flex; flex-direction: column; float: right">
+
+        </div>
+    </div>
+
+    <script>
+        const gameInfo = async() =>{
+            var url = "/user/accountData"
+            const response = await fetch(url);
+            const myJson = await response.json();
+
+            console.log(myJson)
+            var data = myJson.data
+            
+            var gamesElement = document.getElementById("games")
+            var side = 1
+            for(var i=0; i<data.length; i++){
+                if(side == 1){
+                    gamesElement = document.getElementById("gamesLeftSide")
+                    side = side * -1
+                }
+                else{
+                    gamesElement = document.getElementById("gamesRightSide")
+                    side = side * -1
+                }
+                var gameDivElement = document.createElement("div")
+                gameDivElement.className = "gameDiv"
+                gameDivElement.id = data[i]._id
+                gameDivElement.name = data[i]._id
+                gameDivElement.onclick = function(){
+                    console.log(this.getAttribute("id"))
+                    var gameId = this.getAttribute("id")
+                    window.location.href = "/game/finished/" + gameId
+                }
+
+                var playersElement = document.createElement('p')
+                playersElement.innerHTML = "amount of players: " + data[i].players.length
+
+                var typeElement = document.createElement('p')
+                typeElement.innerHTML = "type of game: " + data[i].type
+
+                var scoreElement = document.createElement('p')
+                scoreElement.innerHTML = "score: " + data[i].score.username
+
+                gameDivElement.appendChild(playersElement)
+                gameDivElement.appendChild(typeElement)
+                gameDivElement.appendChild(scoreElement)
+
+                gamesElement.appendChild(gameDivElement)
+            }
+        }
+
+        window.addEventListener("load", async function(){
+            gameInfo()
+        })
+    </script>
+</body>
+</html>

@@ -4,8 +4,160 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        body{margin: 0;}
+        /* .container{display: flex; align-content: center;} */
+        .containerGameInfo{
+            display: flex; 
+            width: 50vw; 
+            justify-content: space-around; 
+            background-color:aquamarine; 
+            border-radius: 20%; 
+            border: .5rem solid black;
+            flex-direction: column;
+        }
+        .questionElement{width: 50vw; padding-bottom: 10%; border: .5rem solid black}
+        #questions{display: inline; align-content: center;}
+        /* .mainGameContainer{display: flex; align-content: center; justify-content: center;} */
+
+        .topnav {
+        overflow: hidden;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+        }
+
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+    </style>
 </head>
 <body>
-    
+    <div class="topnav">
+        <div class="">
+            <a class="active" href="/">Home</a>
+            <a href="/user/account">Account</a>
+        </div>
+        
+        <div>
+            <a href="/user/logoff">logoff</a>
+        </div>
+    </div>
+
+    <div style="display: flex; align-content: center; justify-content: center; padding-top: 5vh;">
+        <div class="container">
+
+            <div class="containerGameInfo">
+                <h4 style="text-align: center;"><strong>Game stats</strong></h4>
+                <div>
+                    <div class="left" style="float:left; width: 35%;">
+                        <div class="topLeft" style="display: flex; justify-content: space-between;">
+                            <p id="playerScore">score</p>
+                            <p id="playerPercent">percent</p>
+                        </div>
+
+                        <div class="bottomLeft" style="display: flex; justify-content: space-between;">
+                            <p id="gameCorrect">correct</p>
+                            <p id="gameIncorrect">incorrect</p>
+                        </div>
+
+                    </div>
+                    <div class="right" id="listcelebrity" style="float: right">
+                        <p>list of celebrities</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2><strong>Questions</strong></h2>
+            <div id="questions">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var pathArray = window.location.pathname.split('/');
+        const id = pathArray[pathArray.length - 1]
+
+        const listQuestions = (data) =>{
+            var questionsElement = document.getElementById("questions")
+
+
+            for(var i=0; i<data.length; i++){
+                var questionElement = document.createElement("div")
+                questionElement.className = "questionElement"
+                var answerElement = document.createElement("h2")
+                var optionsElement = document.createElement("div")
+                var tweetElement = document.createElement("p")
+
+                answerElement.innerHTML = "Answer: " + data[i].answer 
+                optionsElement.innerHTML = "Options: " + data[i].celebs 
+                tweetElement.innerHTML = "Tweet: " + data[i].tweet 
+
+                questionElement.appendChild(answerElement)
+                questionElement.appendChild(optionsElement)
+                questionElement.appendChild(tweetElement)
+
+                questionsElement.appendChild(questionElement)
+
+            }
+
+
+        }
+
+        const loadData = async() =>{
+            var url = window.location.origin + "/game/status/" + id
+            const response = await fetch(url);
+            const myJson = await response.json();
+
+            console.log(myJson)
+
+            var celebs = myJson.gameStatus.celebrities
+
+            var listofcelebElement = document.getElementById("listcelebrity")
+            for(var i=0; i<celebs.length; i++){
+                var celebElement = document.createElement("p")
+                celebElement.innerHTML = celebs[i]
+                celebElement.className = "celebrityElement"
+                listofcelebElement.appendChild(celebElement)
+            }
+
+            var correct = myJson.gameStatus.score.username/100
+
+            document.getElementById("playerScore").innerHTML = "Score: " + myJson.gameStatus.score.username
+
+            // come back and change the username
+            document.getElementById("playerPercent").innerHTML = "Percent correct: " + ((correct) / (celebs.length * 3)).toFixed(2)
+            document.getElementById("gameCorrect").innerHTML = "Correct: " + correct
+            document.getElementById("gameIncorrect").innerHTML = "Incorrect: " + ((celebs.length * 3) - correct)
+            listQuestions(myJson.gameStatus.questions)
+        }
+
+        window.addEventListener("load", async function(){
+            loadData()
+        })
+    </script>
 </body>
 </html>

@@ -23,7 +23,7 @@ route.get("/finished/:gameId", (req,res) =>{
     //console.log(process.cwd() + "/templates/game.html")
     //res.json("hi")
     console.log(req.params.gameId)
-    gameModel.findOne({ 'id': req.params.gameId }, function (err, game) {
+    gameModel.findOne({ _id: req.params.gameId }, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
@@ -44,7 +44,7 @@ route.get("/status/:gameId", (req,res) =>{
         }
         else{
             console.log(game)
-            res.json({gameStatus: game})
+            res.json({gameStatus: game, username: req.session.userInfo.username})
             //res.sendFile(process.cwd() + "/templates/finishedGame.html")
         }
     })
@@ -57,7 +57,7 @@ route.post("/correct/:gameId", (req,res) =>{
     //console.log(req.params.gameId)
 
     // you need to change the username
-    gameModel.findOneAndUpdate({ 'id': req.params.gameId }, {"score": {"username": req.body.score}}, function (err, game) {
+    gameModel.findOneAndUpdate({ _id: req.params.gameId }, {"score": {"username": req.body.score}}, function (err, game) {
         if (err){
             res.json("doesn't exist go back please")
         }
@@ -72,7 +72,7 @@ route.post("/start", (req,res)=>{
     console.log(req.body.celebrities.length)
     var model = new gameModel({
         owner: "player1",
-        players: ["player1"],
+        players: [req.session.userInfo.username],
         celebrities: req.body.celebrities,
         type: "singlePlayer",
         rounds: req.body.celebrities.length * 3
