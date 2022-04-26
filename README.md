@@ -1,21 +1,24 @@
 # Final project
 
-#### Your name
+### Names
 
 Lincoln Mcloud
+
 Vasilios Kladas
 
-#### Your section leader's name
+### Your section leader's name
 
 Hongzheng Wang
+
 Joanne Nicholas
 
-#### Project title
+### Project title
 
 Twitter Game
 
 ## Website
 website url: http://161.35.253.240/
+
 unfortunitly we didn't have enough time to encrypt the website using ssl also we didn't have the money to get the domain name.
 
 ## video
