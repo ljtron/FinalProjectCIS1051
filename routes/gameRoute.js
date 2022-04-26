@@ -75,7 +75,8 @@ route.post("/start", (req,res)=>{
         players: [req.session.userInfo.username],
         celebrities: req.body.celebrities,
         type: "singlePlayer",
-        rounds: req.body.celebrities.length * 3
+        rounds: req.body.celebrities.length * 3,
+        score: {username: 0}
     });
     model.save((err, message) => {
         if (err) {

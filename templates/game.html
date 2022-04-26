@@ -6,7 +6,7 @@
     <title>Document</title>
 
     <style>
-        body{display: flex; justify-content: center; align-content: center}
+        body{margin: 0;}
         .tweetContainer{width: 50vw; justify-content: center; align-content: center; height: 25vh;}
         .tweetHeader{display: flex; justify-content: space-between; align-content: center; }
         .tweetUserInfo{display: flex; align-content: center; width: 25%;}
@@ -16,53 +16,96 @@
         .celebClass:hover{
             background-color: darkgrey;
         }
+        .topnav {
+        overflow: hidden;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1vh;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
+
+        .topnav a.active {
+        background-color: #5c90df;
+        color: white;
+        }
+
+        /* https://www.w3schools.com/howto/howto_js_topnav.asp */
 
     </style>
 </head>
 <body>
 
-    <div class="gameBody" id="gameBodyId">
+    <!-- <div class="topnav">
+        <div class="">
+            <p id="score" style="color: white;">score: </p>
+        </div>
+        
+        <div>
+            <p id="round" style="color: white;">round: </p>
+        </div>
+    </div> -->
 
-        <div class="tweetContainer">
-            <div class="tweetHeader">
-                <div class="tweetUserInfo">
-                    <div class="tweetAvatar">
-                        Avatar
-                        <!-- <p style="font-size: 50%; text-align: center; justify-self: center; vertical-align: middle;">A</p> -->
-                        <!-- <h3 style="text-align: center; white-space: nowrap;">A</h3> -->
+    <div style="display: flex; justify-content: center; align-content: center">
+        <div class="gameBody" id="gameBodyId">
+
+            <div class="tweetContainer">
+                <div class="tweetHeader">
+                    <div class="tweetUserInfo">
+                        <div class="tweetAvatar">
+                            Avatar
+                            <!-- <p style="font-size: 50%; text-align: center; justify-self: center; vertical-align: middle;">A</p> -->
+                            <!-- <h3 style="text-align: center; white-space: nowrap;">A</h3> -->
+                        </div>
+
+                        <div class="tweetName">
+                            <p>Name</p>
+                            <p>@username</p>
+                        </div>
                     </div>
 
-                    <div class="tweetName">
-                        <p>Name</p>
-                        <p>@username</p>
-                    </div>
+                    <!-- <img src="/assets/twitterLogo.png" alt="twitter logo" style="width:10%;height:20%; padding-top: 5%;"> -->
                 </div>
 
-                <!-- <img src="/assets/twitterLogo.png" alt="twitter logo" style="width:10%;height:20%; padding-top: 5%;"> -->
+                <div class="tweetContent" style="height: 33%;">
+                    <h3 id="tweet">tweet</h1>
+                </div>
+
+                <!-- <div class="tweetFooter">
+
+                </div> -->
             </div>
 
-            <div class="tweetContent" style="height: 33%;">
-                <h3 id="tweet">tweet</h1>
+            <div id="celebSelect" style="padding-top: 10%;">
+
             </div>
 
-            <!-- <div class="tweetFooter">
-
-            </div> -->
         </div>
 
-        <div id="celebSelect" style="padding-top: 10%;">
-
+        <div id="correctAnime" hidden>
+            <h1 style="text-align: center;">Correct</h1>
+            <!-- <img src="/assets/correctGif.webp" alt="Computer man" style="width:100%;height:100%;"> -->
         </div>
-
-    </div>
-
-    <div id="correctAnime" hidden>
-        <h1 style="text-align: center;">Correct</h1>
-        <!-- <img src="/assets/correctGif.webp" alt="Computer man" style="width:100%;height:100%;"> -->
-    </div>
-    <div id="IncorrectAnime" hidden>
-        <h1 style="text-align: center;">Incorrect</h1>
-        <!-- <img src="/assets/incorrectGif.webp" alt="Computer man" style="width:100%;height:100%;"> -->
+        <div id="IncorrectAnime" hidden>
+            <h1 style="text-align: center;">Incorrect</h1>
+            <!-- <img src="/assets/incorrectGif.webp" alt="Computer man" style="width:100%;height:100%;"> -->
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -97,6 +140,9 @@
         const nextQuestion = () =>{
             round += 1
             celebSelectElement.innerHTML = ""
+
+            //document.getElementById("score").innerHTML = "score: " + score
+            //document.getElementById("round").innerHTML = "round: " + round
             socket.emit('gameSingle', {start: false, roomId: id, next: true, round: round});
         }
 
@@ -118,6 +164,9 @@
         }
 
         socket.on('gameSingle', async function(msg) {
+            document.getElementById("score").innerHTML = "score: " + score
+            document.getElementById("round").innerHTML = "round: " + round
+
             dataFromServer = msg
             if(msg.done == true){
                 await updateScore()
