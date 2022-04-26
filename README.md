@@ -1,10 +1,25 @@
 # Final project
 
+#### Your name
+
+Lincoln Mcloud
+Vasilios Kladas
+
+#### Your section leader's name
+
+Hongzheng Wang
+Joanne Nicholas
+
+#### Project title
+
+Twitter Game
+
 ## Website
 website url: http://161.35.253.240/
 unfortunitly we didn't have enough time to encrypt the website using ssl also we didn't have the money to get the domain name.
 
 ## video
+youtube link: https://youtu.be/38rv50rS6_8
 
 
 ## adversity
@@ -28,3 +43,10 @@ While developing the website we ran into many problems. The first major one was 
 -- npm run test to run development mode
 -- npm run deploy to run server mode
 
+## screenshots
+![login signup](/Screenshots/screenshot1.JPG "login Signup screen")
+![homePage](/Screenshots/screenshot2.JPG "Homepage screen")
+![accountPage](/Screenshots/screenshot3.JPG "account screen")
+![question1](/Screenshots/screenshot4.JPG "question1 screen")
+![question2](/Screenshots/screenshot5.JPG "question2 screen")
+![gameStats](/Screenshots/screenshot6.JPG "gameStats screen")
