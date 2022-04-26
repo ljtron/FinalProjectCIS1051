@@ -7,9 +7,9 @@
 
     <style>
         body{
-            display: flex;
+            /* display: flex;
             justify-content: center;
-            align-content: center;
+            align-content: center; */
             background-color:aquamarine;
         }
         .bodyContainer{width:50vw; display: flex; justify-content: space-between;}
@@ -26,29 +26,41 @@
 
     </div>
 
-    <div class="bodyContainer">
-        <div class="left" id="sign up">
-            <h1>Sign up</h1>
-            <input type="email" name="email" id="emailsupInp" placeholder="email@email.com">
-            <br>
-            <input type="text" name="name" id="namesupInp" placeholder="your name">
-            <br>
-            <input type="text" name="username" id="usernamesupInp" placeholder="username">
-            <br>
-            <input type="password" name="password" id="passwordsupInp" placeholder="password">
-            <br>
-            <button class="submitBtn" id="signUpBTN">sign Up</button>
+    <div style="display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color:aquamarine;">
 
-        </div>
+        <div class="bodyContainer">
+            <div class="left" id="sign up">
+                <h1>Sign up</h1>
+                <input type="email" name="email" id="emailsupInp" placeholder="email@email.com">
+                <br>
+                <input type="text" name="name" id="namesupInp" placeholder="your name">
+                <br>
+                <input type="text" name="username" id="usernamesupInp" placeholder="username">
+                <br>
+                <input type="password" name="password" id="passwordsupInp" placeholder="password">
+                <br>
+                <button class="submitBtn" id="signUpBTN">sign Up</button>
 
-        <div class="right" id="sign in">
-            <h1>Sign in</h1>
-            <input type="email" name="email" id="emailSinInp" placeholder="email@email.com">
-            <br>
-            <input type="password" name="password" id="passwordSinInp" placeholder="password">
-            <br>
-            <button class="submitBtn" id="signInBTN">sign In</button>
+            </div>
+
+            <div class="right" id="sign in">
+                <h1>Sign in</h1>
+                <input type="email" name="email" id="emailSinInp" placeholder="email@email.com">
+                <br>
+                <input type="password" name="password" id="passwordSinInp" placeholder="password">
+                <br>
+                <button class="submitBtn" id="signInBTN">sign In</button>
+            </div>
         </div>
+    </div>
+
+    <div>
+        <h1>Disclaimer</h1>
+        <p>Don't use your work email or passwords that you use on other website</p>
+        <p>it can be hacked and intercepted</p>
     </div>
 
     <script>
